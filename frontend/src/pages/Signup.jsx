@@ -47,9 +47,9 @@ const Signup = () => {
         return;
       }
 
-      localStorage.setItem("token", data.token);
+      sessionStorage.setItem("token", data.authToken);
       alert("Signup successful!");
-      navigate("/login");
+      navigate("/signin");
     } catch (err) {
       setError("Something went wrong");
     }

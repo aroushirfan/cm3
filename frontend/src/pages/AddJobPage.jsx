@@ -6,7 +6,7 @@ const AddJobPage = () => {
 
   // Check authentication on mount
   useEffect(() => {
-    const authStatus = localStorage.getItem("isAuthenticated");
+    const authStatus = sessionStorage.getItem("isAuthenticated");
     if (authStatus !== "true") {
       navigate("/login");
     }

@@ -9,17 +9,17 @@ const JobDetailsPage = () => {
 
   useEffect(() => {
     // Check authentication status
-    const authStatus = localStorage.getItem("isAuthenticated");
+    const authStatus = sessionStorage.getItem("isAuthenticated");
     setIsAuthenticated(authStatus === "true");
-    
+
     // Listen for auth changes
     const handleAuthChange = () => {
-      const authStatus = localStorage.getItem("isAuthenticated");
+      const authStatus = sessionStorage.getItem("isAuthenticated");
       setIsAuthenticated(authStatus === "true");
     };
-    
+
     window.addEventListener("authChange", handleAuthChange);
-    
+
     return () => {
       window.removeEventListener("authChange", handleAuthChange);
     };
@@ -49,6 +49,9 @@ const JobDetailsPage = () => {
     try {
       const res = await fetch(`/api/jobs/${jobId}`, {
         method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${authToken}`
+        }
       });
 
       if (res.ok) {

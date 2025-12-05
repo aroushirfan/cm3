@@ -9,7 +9,7 @@ const Navbar = () => {
   useEffect(() => {
     // Check if user is authenticated
     const checkAuth = () => {
-      const authStatus = localStorage.getItem("isAuthenticated");
+      const authStatus = sessionStorage.getItem("isAuthenticated");
       setIsAuthenticated(authStatus === "true");
     };
     
@@ -30,7 +30,7 @@ const Navbar = () => {
   }, [location]);
 
   const handleLogout = () => {
-    localStorage.removeItem("isAuthenticated");
+    sessionStorage.removeItem("isAuthenticated");
     setIsAuthenticated(false);
     window.dispatchEvent(new Event("authChange"));
     navigate("/");
@@ -43,7 +43,7 @@ const Navbar = () => {
         {!isAuthenticated ? (
           <>
             <Link to="/signup">Sign Up</Link>
-            <Link to="/login">Login</Link>
+            <Link to="/signin">Sign in</Link>
           </>
         ) : (
           <>
