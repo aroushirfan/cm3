@@ -8,7 +8,7 @@ const AddJobPage = () => {
   useEffect(() => {
     const authStatus = sessionStorage.getItem("isAuthenticated");
     if (authStatus !== "true") {
-      navigate("/login");
+      navigate("/signin");
     }
   }, [navigate]);
 
@@ -34,20 +34,23 @@ const AddJobPage = () => {
       company: {
         name: companyName,
         contactEmail,
-        size: 100
+        size: 100,
       },
       location: {
         city,
-        state
+        state,
       },
       salary: Number(salary),
       experienceLevel,
-      requirements: requirements.split(",").map((item) => item.trim())
+      requirements: requirements.split(",").map((item) => item.trim()),
     };
 
     const res = await fetch("/api/jobs", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+      },
       body: JSON.stringify(jobData),
     });
 
@@ -62,9 +65,13 @@ const AddJobPage = () => {
     <div className="create">
       <h2>Add a New Job</h2>
       <form onSubmit={submitForm}>
-
         <label>Job Title</label>
-        <input type="text" required value={title} onChange={(e) => setTitle(e.target.value)} />
+        <input
+          type="text"
+          required
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
 
         <label>Job Type</label>
         <select value={type} onChange={(e) => setType(e.target.value)}>
@@ -75,25 +82,57 @@ const AddJobPage = () => {
         </select>
 
         <label>Description</label>
-        <textarea required value={description} onChange={(e) => setDescription(e.target.value)} />
+        <textarea
+          required
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
 
         <label>Company Name</label>
-        <input type="text" required value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
+        <input
+          type="text"
+          required
+          value={companyName}
+          onChange={(e) => setCompanyName(e.target.value)}
+        />
 
         <label>Company Email</label>
-        <input type="text" required value={contactEmail} onChange={(e) => setContactEmail(e.target.value)} />
+        <input
+          type="text"
+          required
+          value={contactEmail}
+          onChange={(e) => setContactEmail(e.target.value)}
+        />
 
         <label>City</label>
-        <input type="text" required value={city} onChange={(e) => setCity(e.target.value)} />
+        <input
+          type="text"
+          required
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+        />
 
         <label>State</label>
-        <input type="text" required value={state} onChange={(e) => setState(e.target.value)} />
+        <input
+          type="text"
+          required
+          value={state}
+          onChange={(e) => setState(e.target.value)}
+        />
 
         <label>Salary</label>
-        <input type="number" required value={salary} onChange={(e) => setSalary(e.target.value)} />
+        <input
+          type="number"
+          required
+          value={salary}
+          onChange={(e) => setSalary(e.target.value)}
+        />
 
         <label>Experience Level</label>
-        <select value={experienceLevel} onChange={(e) => setExperienceLevel(e.target.value)}>
+        <select
+          value={experienceLevel}
+          onChange={(e) => setExperienceLevel(e.target.value)}
+        >
           <option value="Entry">Entry</option>
           <option value="Mid">Mid</option>
           <option value="Senior">Senior</option>

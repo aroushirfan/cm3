@@ -1,0 +1,1 @@
+### I would grade myself **80** points because I believe, I completed all my assigned features, and code was also working as it should. I also helped others a lot and then also deployed both the versions, fixed the problems that I could.

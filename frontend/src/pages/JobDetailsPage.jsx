@@ -4,27 +4,24 @@ import { useEffect, useState } from "react";
 const JobDetailsPage = () => {
   const { jobId } = useParams();
   const navigate = useNavigate();
+
   const [job, setJob] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  // Check authentication status on load + on updates
   useEffect(() => {
-    // Check authentication status
-    const authStatus = sessionStorage.getItem("isAuthenticated");
-    setIsAuthenticated(authStatus === "true");
+    const auth = sessionStorage.getItem("isAuthenticated") === "true";
+    setIsAuthenticated(auth);
 
-    // Listen for auth changes
     const handleAuthChange = () => {
-      const authStatus = sessionStorage.getItem("isAuthenticated");
-      setIsAuthenticated(authStatus === "true");
+      setIsAuthenticated(sessionStorage.getItem("isAuthenticated") === "true");
     };
 
     window.addEventListener("authChange", handleAuthChange);
-
-    return () => {
-      window.removeEventListener("authChange", handleAuthChange);
-    };
+    return () => window.removeEventListener("authChange", handleAuthChange);
   }, []);
 
+  // Fetch job details
   useEffect(() => {
     const fetchJob = async () => {
       try {
@@ -39,26 +36,27 @@ const JobDetailsPage = () => {
     fetchJob();
   }, [jobId]);
 
+  // DELETE job
   const deleteJob = async () => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this job?"
     );
-
     if (!confirmDelete) return;
 
     try {
       const res = await fetch(`/api/jobs/${jobId}`, {
         method: "DELETE",
         headers: {
-          "Authorization": `Bearer ${authToken}`
-        }
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+        },
       });
 
       if (res.ok) {
-        alert("Job deleted successfully.");
+        alert("Job deleted successfully");
         navigate("/");
       } else {
-        throw new Error("Failed to delete job.");
+        throw new Error("Failed to delete job");
       }
     } catch (err) {
       alert("Error deleting job: " + err.message);
@@ -70,19 +68,36 @@ const JobDetailsPage = () => {
   return (
     <div className="job-details">
       <h1>{job.title}</h1>
-      <p><b>Type:</b> {job.type}</p>
-      <p><b>Description:</b> {job.description}</p>
+
+      <p>
+        <b>Type:</b> {job.type}
+      </p>
+      <p>
+        <b>Description:</b> {job.description}
+      </p>
 
       <h3>Company</h3>
-      <p>Name: {job.company?.name}</p>
-      <p>Email: {job.company?.contactEmail}</p>
-      <p>Size: {job.company?.size}</p>
+      <p>
+        <b>Name:</b> {job.company?.name}
+      </p>
+      <p>
+        <b>Email:</b> {job.company?.contactEmail}
+      </p>
+      <p>
+        <b>Size:</b> {job.company?.size}
+      </p>
 
       <h3>Location</h3>
-      <p>{job.location?.city}, {job.location?.state}</p>
+      <p>
+        {job.location?.city}, {job.location?.state}
+      </p>
 
-      <p><b>Salary:</b> ${job.salary}</p>
-      <p><b>Experience:</b> {job.experienceLevel}</p>
+      <p>
+        <b>Salary:</b> ${job.salary}
+      </p>
+      <p>
+        <b>Experience:</b> {job.experienceLevel}
+      </p>
 
       <h3>Requirements</h3>
       <ul>
@@ -91,8 +106,9 @@ const JobDetailsPage = () => {
         ))}
       </ul>
 
+      {/* Show buttons only when logged in */}
       {isAuthenticated && (
-        <>
+        <div style={{ marginTop: "20px" }}>
           <button onClick={deleteJob} style={{ marginRight: "10px" }}>
             Delete
           </button>
@@ -100,7 +116,7 @@ const JobDetailsPage = () => {
           <Link to={`/edit-job/${jobId}`}>
             <button>Edit</button>
           </Link>
-        </>
+        </div>
       )}
     </div>
   );

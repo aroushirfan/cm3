@@ -9,6 +9,7 @@ const SignInPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,6 +25,8 @@ const SignInPage = () => {
       const { token } = res.data;
 
       sessionStorage.setItem("authToken", token);
+      sessionStorage.setItem("isAuthenticated", "true");
+      setIsAuthenticated(true);
 
       setLoading(false);
       navigate("/");
