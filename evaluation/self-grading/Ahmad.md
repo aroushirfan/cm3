@@ -1,6 +1,6 @@
 Self-Grading – Ahmad
 
-Score: 76 / 80
+Score: 76 / 80    --> Give it my all.
 
 Justification
 
