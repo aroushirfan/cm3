@@ -1,12 +1,12 @@
 require("dotenv").config();
 
 const PORT = process.env.PORT;
-const MONGO_URI =
+const DEPLOY_MONGO_URI =
   process.env.NODE_ENV === "test"
     ? process.env.TEST_MONGO_URI
-    : process.env.MONGO_URI;
+    : process.env.DEPLOY_MONGO_URI;
 
 module.exports = {
-  MONGO_URI,
+  DEPLOY_MONGO_URI,
   PORT,
 };
