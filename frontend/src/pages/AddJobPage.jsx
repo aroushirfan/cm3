@@ -37,7 +37,7 @@ const AddJobPage = () => {
       requirements: requirements.split(",").map((item) => item.trim())
     };
 
-    const res = await fetch("http://localhost:4000/api/jobs", {
+    const res = await fetch("/api/jobs", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(jobData),
