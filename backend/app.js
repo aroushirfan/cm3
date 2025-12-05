@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require("express");
 const app = express();
+const mongoose = require("mongoose");
 const jobRouter = require("./routes/jobRouter");
 const { unknownEndpoint,errorHandler } = require("./middleware/customMiddleware");
 const connectDB = require("./config/db");
