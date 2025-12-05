@@ -1,16 +1,27 @@
 import { Link } from "react-router-dom";
 
 const JobListing = ({ job }) => {
+  if (!job) {
+    console.warn("JobListing received undefined job.");
+    return null;
+  }
+
+  const jobId = job.id || job._id;
+
+  if (!jobId) {
+    console.warn("JobListing: job has no id:", job);
+    return null;
+  }
+
   return (
     <Link
-      to={`/jobs/${job._id}`}
+      to={`/jobs/${jobId}`}
       className="job-preview"
       style={{ textDecoration: "none", color: "inherit" }}
     >
-      <h2>{job.title}</h2>
-      <p>Type: {job.type}</p>
-      <p>Description: {job.description}</p>
-      <p>Company: {job.company?.name || job.company}</p>
+      <h2>{job.title || "No Title"}</h2>
+      <p>Type: {job.type || "Unknown"}</p>
+      <p>Company: {job.company?.name || "Unknown"}</p>
     </Link>
   );
 };

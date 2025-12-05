@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 import JobListing from "./JobListing";
 
 const JobListings = () => {
@@ -19,13 +18,15 @@ const JobListings = () => {
     fetchJobs();
   }, []);
 
+  if (!jobs || jobs.length === 0) {
+    return <p>No jobs available</p>;
+  }
+
   return (
     <div className="job-list">
-      {jobs.length === 0 ? (
-        <p>No jobs available</p>
-      ) : (
-        jobs.map((job) => <JobListing key={job._id} job={job} />)
-      )}
+      {jobs.map((job) => (
+        <JobListing key={job.id || job._id} job={job} />
+      ))}
     </div>
   );
 };
