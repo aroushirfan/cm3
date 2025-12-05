@@ -4,7 +4,6 @@ const app = express();
 const jobRouter = require("./routes/jobRouter");
 const { unknownEndpoint, errorHandler } = require("./middleware/customMiddleware");
 const userRouter = require("./routes/userRouter");
-const { unknownEndpoint,errorHandler } = require("./middleware/customMiddleware");
 const connectDB = require("./config/db");
 const cors = require("cors");
 
