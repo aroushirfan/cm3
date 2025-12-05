@@ -46,6 +46,10 @@ const JobDetailsPage = () => {
     try {
       const res = await fetch(`/api/jobs/${jobId}`, {
         method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+        },
       });
 
       if (res.ok) {
