@@ -7,6 +7,7 @@ import EditJobPage from "./pages/EditJobPage";
 import JobDetailsPage from "./pages/JobDetailsPage";
 import Navbar from "./components/Navbar";
 import NotFoundPage from "./pages/NotFoundPage";
+import SignInPage from "./pages/SigninPage";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <div className="content">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/signin" element={<SignInPage />} />
             <Route path="/add-job" element={<AddJobPage />} />
 
             {/* Job Details Page */}
