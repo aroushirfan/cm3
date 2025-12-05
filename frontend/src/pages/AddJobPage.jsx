@@ -9,7 +9,7 @@ const AddJobPage = () => {
   const [description, setDescription] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [contactEmail, setContactEmail] = useState("");
-  const [contactPhone, setContactPhone] = useState("");
+  //const [contactPhone, setContactPhone] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [salary, setSalary] = useState("");
