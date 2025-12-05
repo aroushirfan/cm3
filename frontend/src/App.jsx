@@ -4,6 +4,8 @@ import Home from "./pages/HomePage";
 import AddJobPage from "./pages/AddJobPage";
 import EditJobPage from "./pages/EditJobPage";
 import JobDetailsPage from "./pages/JobDetailsPage";
+import LoginPage from "./pages/LoginPage";
+import SignUpPage from "./pages/SignUpPage";
 import Navbar from "./components/Navbar";
 import NotFoundPage from "./pages/NotFoundPage";
 import SignInPage from "./pages/SigninPage";

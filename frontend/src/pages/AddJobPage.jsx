@@ -1,8 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const AddJobPage = () => {
   const navigate = useNavigate();
+
+  // Check authentication on mount
+  useEffect(() => {
+    const authStatus = localStorage.getItem("isAuthenticated");
+    if (authStatus !== "true") {
+      navigate("/login");
+    }
+  }, [navigate]);
 
   const [title, setTitle] = useState("");
   const [type, setType] = useState("Full-Time");

@@ -5,6 +5,25 @@ const JobDetailsPage = () => {
   const { jobId } = useParams();
   const navigate = useNavigate();
   const [job, setJob] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    // Check authentication status
+    const authStatus = localStorage.getItem("isAuthenticated");
+    setIsAuthenticated(authStatus === "true");
+    
+    // Listen for auth changes
+    const handleAuthChange = () => {
+      const authStatus = localStorage.getItem("isAuthenticated");
+      setIsAuthenticated(authStatus === "true");
+    };
+    
+    window.addEventListener("authChange", handleAuthChange);
+    
+    return () => {
+      window.removeEventListener("authChange", handleAuthChange);
+    };
+  }, []);
 
   useEffect(() => {
     const fetchJob = async () => {
@@ -69,13 +88,17 @@ const JobDetailsPage = () => {
         ))}
       </ul>
 
-      <button onClick={deleteJob} style={{ marginRight: "10px" }}>
-        Delete
-      </button>
+      {isAuthenticated && (
+        <>
+          <button onClick={deleteJob} style={{ marginRight: "10px" }}>
+            Delete
+          </button>
 
-      <Link to={`/edit-job/${jobId}`}>
-        <button>Edit</button>
-      </Link>
+          <Link to={`/edit-job/${jobId}`}>
+            <button>Edit</button>
+          </Link>
+        </>
+      )}
     </div>
   );
 };

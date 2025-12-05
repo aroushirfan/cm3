@@ -6,6 +6,14 @@ const EditJobPage = () => {
   const { jobId } = useParams();
   const navigate = useNavigate();
 
+  // Check authentication on mount
+  useEffect(() => {
+    const authStatus = localStorage.getItem("isAuthenticated");
+    if (authStatus !== "true") {
+      navigate("/login");
+    }
+  }, [navigate]);
+
   const [title, setTitle] = useState("");
   const [type, setType] = useState("Full-Time");
   const [description, setDescription] = useState("");

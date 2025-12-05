@@ -30,6 +30,21 @@
 .navbar a:hover {
   color: #f1356d;
 }
+.navbar .logout-btn {
+  margin-left: 16px;
+  background: #f1356d;
+  color: #fff;
+  border: 0;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 14px;
+}
+.navbar .logout-btn:hover {
+  background: #d12a5a;
+  color: #fff;
+}
 .content {
   max-width: 600px;
   margin: 40px auto;
