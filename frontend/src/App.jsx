@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-// pages & components
 import Home from "./pages/HomePage";
 import AddJobPage from "./pages/AddJobPage";
 import EditJobPage from "./pages/EditJobPage";
@@ -19,13 +18,8 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/signin" element={<SignInPage />} />
             <Route path="/add-job" element={<AddJobPage />} />
-
-            {/* Job Details Page */}
             <Route path="/jobs/:jobId" element={<JobDetailsPage />} />
-
-            {/* Edit Job Page */}
             <Route path="/edit-job/:jobId" element={<EditJobPage />} />
-
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </div>
