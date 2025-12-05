@@ -10,7 +10,7 @@
 - **Feature Completion:** 29/30  
   Completed Sign-In page, edit job functionality, Minor styling or UI improvements could be enhanced.
 
-- **Collaboration & Contribution:** 23/25  
+- **Collaboration & Contribution & communication:** 23/25  
   Actively fixed frontend errors, merged branches, and integrated features successfully.
 
 **Overall:** 77/80 – Strong frontend contribution with complete implementation of assigned features.
