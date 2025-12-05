@@ -11,6 +11,6 @@
   Completed Sign-In page, edit job functionality, Minor styling or UI improvements could be enhanced.
 
 - **Collaboration & Contribution & communication:** 23/25  
-  Actively fixed frontend errors, merged branches, and integrated features successfully.
+  Actively fixed frontend errors, merged branches, and integrated features successfully but lacked communication (for example, one is using localStorage and another is using sessionStorage).
 
 **Overall:** 77/80 – Strong frontend contribution with complete implementation of assigned features.
