@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const JobListings = () => {
   const [jobs, setJobs] = useState([]);
@@ -23,12 +24,17 @@ const JobListings = () => {
         <p>No jobs available</p>
       ) : (
         jobs.map((job) => (
-          <div key={job.id} className="job-preview">
+          <Link
+            to={`/jobs/${job._id}`}
+            key={job._id}
+            className="job-preview"
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
             <h2>{job.title}</h2>
             <p>Type: {job.type}</p>
             <p>Description: {job.description}</p>
-            <p>Company: {job.company?.name}</p>
-          </div>
+            <p>Company: {job.company?.name || job.company}</p>
+          </Link>
         ))
       )}
     </div>
