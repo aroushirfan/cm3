@@ -4,11 +4,11 @@ import Home from "./pages/HomePage";
 import AddJobPage from "./pages/AddJobPage";
 import EditJobPage from "./pages/EditJobPage";
 import JobDetailsPage from "./pages/JobDetailsPage";
-import LoginPage from "./pages/LoginPage";
-import SignUpPage from "./pages/SignUpPage";
 import Navbar from "./components/Navbar";
 import NotFoundPage from "./pages/NotFoundPage";
 import SignInPage from "./pages/SigninPage";
+import Signup from "./pages/Signup";
+
 
 const App = () => {
   return (
@@ -19,6 +19,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/signin" element={<SignInPage />} />
+            <Route path="/signup" element={<Signup/>} />
             <Route path="/add-job" element={<AddJobPage />} />
             <Route path="/jobs/:jobId" element={<JobDetailsPage />} />
             <Route path="/edit-job/:jobId" element={<EditJobPage />} />
