@@ -9,7 +9,7 @@ const JobDetailsPage = () => {
   useEffect(() => {
     const fetchJob = async () => {
       try {
-        const res = await fetch(`http://localhost:4000/api/jobs/${jobId}`);
+        const res = await fetch(`/api/jobs/${jobId}`);
         const data = await res.json();
         setJob(data);
       } catch (error) {
@@ -20,9 +20,27 @@ const JobDetailsPage = () => {
     fetchJob();
   }, [jobId]);
 
-  // ❌ Delete disabled — does nothing
-  const deleteJob = () => {
-    alert("Delete feature is not available.");
+  const deleteJob = async () => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this job?"
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+      const res = await fetch(`/api/jobs/${jobId}`, {
+        method: "DELETE",
+      });
+
+      if (res.ok) {
+        alert("Job deleted successfully.");
+        navigate("/");
+      } else {
+        throw new Error("Failed to delete job.");
+      }
+    } catch (err) {
+      alert("Error deleting job: " + err.message);
+    }
   };
 
   if (!job) return <p>Loading...</p>;
