@@ -9,100 +9,151 @@ const EditJobPage = () => {
   const [title, setTitle] = useState("");
   const [type, setType] = useState("Full-Time");
   const [description, setDescription] = useState("");
-  const [company, setCompany] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const [contactEmail, setContactEmail] = useState("");
+  const [contactPhone, setContactPhone] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [salary, setSalary] = useState("");
+  const [experienceLevel, setExperienceLevel] = useState("Entry");
+  const [requirements, setRequirements] = useState("");
 
   useEffect(() => {
     axios
       .get(`/api/jobs/${jobId}`)
       .then((res) => {
         const data = res.data;
-
-        setTitle(data.title);
-        setType(data.type);
-        setDescription(data.description);
-        setCompany(data.company);
-        setEmail(data.email);
-        setPhone(data.phone);
+        setTitle(data.title || "");
+        setType(data.type || "Full-Time");
+        setDescription(data.description || "");
+        setCompanyName(data.companyName || "");
+        setContactEmail(data.contactEmail || "");
+        setContactPhone(data.contactPhone || "");
+        setCity(data.location?.city || "");
+        setState(data.location?.state || "");
+        setSalary(data.salary || "");
+        setExperienceLevel(data.experienceLevel || "Entry");
+        setRequirements(data.requirements || "");
       })
       .catch((err) => console.error("Error loading job:", err));
   }, [jobId]);
 
-  const submitForm = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     const updatedJob = {
       title,
       type,
       description,
-      company,
-      email,
-      phone,
+      companyName,
+      contactEmail,
+      contactPhone,
+      location: { city, state },
+      salary,
+      experienceLevel,
+      requirements,
     };
 
     axios
       .put(`/api/jobs/${jobId}`, updatedJob)
       .then(() => {
-        alert("Job updated!");
+        alert("Job updated successfully!");
         navigate("/");
       })
       .catch((err) => console.error("Error updating job:", err));
   };
 
   return (
-    <div className="create">
+    <div className="edit-job">
       <h2>Edit Job</h2>
 
-      <form onSubmit={submitForm}>
-        <label>Job title:</label>
+      <form onSubmit={handleSubmit}>
+        <label>Job Title:</label>
         <input
           type="text"
-          required
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          required
         />
 
-        <label>Job type:</label>
+        <label>Job Type:</label>
         <select value={type} onChange={(e) => setType(e.target.value)}>
-          <option value="Full-Time">Full-Time</option>
-          <option value="Part-Time">Part-Time</option>
-          <option value="Remote">Remote</option>
-          <option value="Internship">Internship</option>
+          <option>Full-Time</option>
+          <option>Part-Time</option>
+          <option>Remote</option>
+          <option>Internship</option>
         </select>
 
-        <label>Job Description:</label>
+        <label>Description:</label>
         <textarea
-          required
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-        ></textarea>
+          required
+        />
 
         <label>Company Name:</label>
         <input
           type="text"
+          value={companyName}
+          onChange={(e) => setCompanyName(e.target.value)}
           required
-          value={company}
-          onChange={(e) => setCompany(e.target.value)}
         />
 
         <label>Contact Email:</label>
         <input
-          type="text"
+          type="email"
+          value={contactEmail}
+          onChange={(e) => setContactEmail(e.target.value)}
           required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
         />
 
         <label>Contact Phone:</label>
         <input
-          type="text"
+          type="tel"
+          value={contactPhone}
+          onChange={(e) => setContactPhone(e.target.value)}
           required
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
         />
 
-        <button>Save Changes</button>
+        <label>City:</label>
+        <input
+          type="text"
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+        />
+
+        <label>State:</label>
+        <input
+          type="text"
+          value={state}
+          onChange={(e) => setState(e.target.value)}
+        />
+
+        <label>Salary:</label>
+        <input
+          type="text"
+          value={salary}
+          onChange={(e) => setSalary(e.target.value)}
+        />
+
+        <label>Experience Level:</label>
+        <select
+          value={experienceLevel}
+          onChange={(e) => setExperienceLevel(e.target.value)}
+        >
+          <option>Entry</option>
+          <option>Mid</option>
+          <option>Senior</option>
+          <option>Lead</option>
+        </select>
+
+        <label>Requirements:</label>
+        <textarea
+          value={requirements}
+          onChange={(e) => setRequirements(e.target.value)}
+        />
+
+        <button type="submit">Save Changes</button>
       </form>
     </div>
   );

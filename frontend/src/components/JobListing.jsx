@@ -1,11 +1,17 @@
-const JobListing = () => {
+import { Link } from "react-router-dom";
+
+const JobListing = ({ job }) => {
   return (
-    <div className="job-preview">
-      <h2>Job Title</h2>
-      <p>Type: some title</p>
-      <p>Description: some description</p>
-      <p>Company: company xyz</p>
-    </div>
+    <Link
+      to={`/jobs/${job._id}`}
+      className="job-preview"
+      style={{ textDecoration: "none", color: "inherit" }}
+    >
+      <h2>{job.title}</h2>
+      <p>Type: {job.type}</p>
+      <p>Description: {job.description}</p>
+      <p>Company: {job.company?.name || job.company}</p>
+    </Link>
   );
 };
 
