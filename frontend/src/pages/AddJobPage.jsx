@@ -9,7 +9,7 @@ const AddJobPage = () => {
   const [description, setDescription] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [contactEmail, setContactEmail] = useState("");
-  const [contactPhone, setContactPhone] = useState("");
+  //const [contactPhone, setContactPhone] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [salary, setSalary] = useState("");
@@ -37,7 +37,7 @@ const AddJobPage = () => {
       requirements: requirements.split(",").map((item) => item.trim())
     };
 
-    const res = await fetch("http://localhost:4000/api/jobs", {
+    const res = await fetch("/api/jobs", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(jobData),
