@@ -64,96 +64,99 @@ const EditJobPage = () => {
   };
 
   return (
-    <div className="edit-job">
+    <div className="create">
       <h2>Edit Job</h2>
 
       <form onSubmit={handleSubmit}>
-        <label>Job Title:</label>
+        <label>Job Title</label>
         <input
           type="text"
+          required
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          required
         />
 
-        <label>Job Type:</label>
+        <label>Job Type</label>
         <select value={type} onChange={(e) => setType(e.target.value)}>
-          <option>Full-Time</option>
-          <option>Part-Time</option>
-          <option>Remote</option>
-          <option>Internship</option>
+          <option value="Full-Time">Full-Time</option>
+          <option value="Part-Time">Part-Time</option>
+          <option value="Remote">Remote</option>
+          <option value="Internship">Internship</option>
         </select>
 
-        <label>Description:</label>
+        <label>Description</label>
         <textarea
+          required
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          required
         />
 
-        <label>Company Name:</label>
+        <label>Company Name</label>
         <input
           type="text"
+          required
           value={companyName}
           onChange={(e) => setCompanyName(e.target.value)}
-          required
         />
 
-        <label>Contact Email:</label>
-        <input
-          type="email"
-          value={contactEmail}
-          onChange={(e) => setContactEmail(e.target.value)}
-          required
-        />
-
-        <label>Contact Phone:</label>
-        <input
-          type="tel"
-          value={contactPhone}
-          onChange={(e) => setContactPhone(e.target.value)}
-          required
-        />
-
-        <label>City:</label>
+        <label>Company Email</label>
         <input
           type="text"
+          required
+          value={contactEmail}
+          onChange={(e) => setContactEmail(e.target.value)}
+        />
+
+        <label>Contact Phone</label>
+        <input
+          type="text"
+          value={contactPhone}
+          onChange={(e) => setContactPhone(e.target.value)}
+        />
+
+        <label>City</label>
+        <input
+          type="text"
+          required
           value={city}
           onChange={(e) => setCity(e.target.value)}
         />
 
-        <label>State:</label>
+        <label>State</label>
         <input
           type="text"
+          required
           value={state}
           onChange={(e) => setState(e.target.value)}
         />
 
-        <label>Salary:</label>
+        <label>Salary</label>
         <input
-          type="text"
+          type="number"
+          required
           value={salary}
           onChange={(e) => setSalary(e.target.value)}
         />
 
-        <label>Experience Level:</label>
+        <label>Experience Level</label>
         <select
           value={experienceLevel}
           onChange={(e) => setExperienceLevel(e.target.value)}
         >
-          <option>Entry</option>
-          <option>Mid</option>
-          <option>Senior</option>
-          <option>Lead</option>
+          <option value="Entry">Entry</option>
+          <option value="Mid">Mid</option>
+          <option value="Senior">Senior</option>
         </select>
 
-        <label>Requirements:</label>
-        <textarea
+        <label>Requirements (comma separated)</label>
+        <input
+          type="text"
           value={requirements}
           onChange={(e) => setRequirements(e.target.value)}
+          placeholder="e.g. node, react, css"
         />
 
-        <button type="submit">Save Changes</button>
+        <button>Save Changes</button>
       </form>
     </div>
   );
