@@ -6,14 +6,6 @@ const EditJobPage = () => {
   const { jobId } = useParams();
   const navigate = useNavigate();
 
-  // Check authentication on mount
-  useEffect(() => {
-    const authStatus = sessionStorage.getItem("isAuthenticated");
-    if (authStatus !== "true") {
-      navigate("/login");
-    }
-  }, [navigate]);
-
   const [title, setTitle] = useState("");
   const [type, setType] = useState("Full-Time");
   const [description, setDescription] = useState("");
@@ -25,10 +17,25 @@ const EditJobPage = () => {
   const [salary, setSalary] = useState("");
   const [experienceLevel, setExperienceLevel] = useState("Entry");
   const [requirements, setRequirements] = useState("");
+  const [loading, setLoading] = useState(true);
 
+  // Check authentication on mount
   useEffect(() => {
+    const token = sessionStorage.getItem("authToken");
+    if (!token) {
+      navigate("/signin");
+    }
+  }, [navigate]);
+
+  // Fetch job data
+  useEffect(() => {
+    const token = sessionStorage.getItem("authToken");
+    if (!token) return;
+
     axios
-      .get(`/api/jobs/${jobId}`)
+      .get(`/api/jobs/${jobId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((res) => {
         const data = res.data;
         setTitle(data.title || "");
@@ -42,12 +49,25 @@ const EditJobPage = () => {
         setSalary(data.salary || "");
         setExperienceLevel(data.experienceLevel || "Entry");
         setRequirements(data.requirements || "");
+        setLoading(false);
       })
-      .catch((err) => console.error("Error loading job:", err));
-  }, [jobId]);
+      .catch((err) => {
+        console.error("Error loading job:", err);
+        if (err.response?.status === 401) {
+          navigate("/signin");
+        }
+      });
+  }, [jobId, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const token = sessionStorage.getItem("authToken");
+    if (!token) {
+      alert("You are not authorized.");
+      navigate("/signin");
+      return;
+    }
 
     const updatedJob = {
       title,
@@ -63,13 +83,23 @@ const EditJobPage = () => {
     };
 
     axios
-      .put(`/api/jobs/${jobId}`, updatedJob)
+      .put(`/api/jobs/${jobId}`, updatedJob, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then(() => {
         alert("Job updated successfully!");
         navigate("/");
       })
-      .catch((err) => console.error("Error updating job:", err));
+      .catch((err) => {
+        console.error("Error updating job:", err);
+        if (err.response?.status === 401) {
+          alert("You are not authorized.");
+          navigate("/signin");
+        }
+      });
   };
+
+  if (loading) return <p>Loading job details...</p>;
 
   return (
     <div className="create">
@@ -164,7 +194,7 @@ const EditJobPage = () => {
           placeholder="e.g. node, react, css"
         />
 
-        <button>Save Changes</button>
+        <button type="submit">Save Changes</button>
       </form>
     </div>
   );
